@@ -1,0 +1,32 @@
+<?php
+// Ochrana pred SQL Injection
+function ochrana_sql_injection($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+// Použitie funkcie pri práci s databázou
+$user_input = ochrana_sql_injection($_POST['user_input']);
+
+// Ochrana pred XSS
+function ochrana_xss($data) {
+    return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+}
+
+// Použitie funkcie pri zobrazovaní dát
+$safe_output = ochrana_xss($user_data_from_database);
+?>
+
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Ochrana Aplikácie</title>
+</head>
+<body>
+    <!-- Bezpečné zobrazenie dát -->
+    <?php echo $safe_output; ?>
+</body>
+</html>
